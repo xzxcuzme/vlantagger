@@ -19,33 +19,7 @@
 #include <arpa/inet.h>
 #include "VirtualLan/vlan.h"
 
-#define PID_FILE "/var/run/vlantaggerd.pid"
-
 static int running = 1;
-FILE *rules;
-
-void pid_handler()
-{
-	FILE *pid_file;
-	pid_t pid = getpid();
-
-	pid_file = fopen(PID_FILE, "w");
-
-	if (pid_file == NULL)
-	{
-		perror("Error occured while opening vlantaggerd.pid file");
-		exit(EXIT_FAILURE);
-	}
-
-	fprintf(pid_file, "%d", pid);
-
-	if (fclose (pid_file) == EOF)
-	{
-		perror("Error close while opening vlantaggerd.pid file");
-		exit(EXIT_FAILURE);
-	}
-	return;
-}
 
 int main(int argc, char const *argv[])
 {
@@ -80,6 +54,5 @@ int main(int argc, char const *argv[])
 
 	syslog (LOG_NOTICE, "Vlan_tagger terminated.");
 	closelog();
-	unlink(PID_FILE);
 	exit(EXIT_SUCCESS);
 }

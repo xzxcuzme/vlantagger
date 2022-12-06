@@ -18,6 +18,7 @@
 
 #define SIZE_BUFF 1500
 #define IFACE "/var/run/iface.txt"
+#define PID_FILE "/var/run/vlantaggerd.pid"
 
 static int running = 1;
 static int ruls = 0;
@@ -33,6 +34,29 @@ void error_exit(char err[])
     exit(EXIT_FAILURE);
 }
 
+void pid_handler()
+{
+    FILE *pid_file;
+    pid_t pid = getpid();
+
+    pid_file = fopen(PID_FILE, "w");
+
+    if (pid_file == NULL)
+    {
+        perror("Error occured while opening vlantaggerd.pid file");
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(pid_file, "%d", pid);
+
+    if (fclose (pid_file) == EOF)
+    {
+        perror("Error close while opening vlantaggerd.pid file");
+        exit(EXIT_FAILURE);
+    }
+    return;
+}
+
 void signal_handler(int signum)
 {
     syslog (LOG_NOTICE, "Vlan_tagger catch signal w/ id %d", signum);
@@ -40,7 +64,6 @@ void signal_handler(int signum)
     syslog (LOG_NOTICE, "Vlan_tagger set running to %d", running);
     return;
 }
-
 
 void signal_rule(int signum)
 {
@@ -192,5 +215,6 @@ int vlan_tegger()
             }
         }
     }
+    unlink(PID_FILE);
     exit(EXIT_SUCCESS);
 }

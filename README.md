@@ -7,4 +7,4 @@
 Посмотреть системный лог можно командой <strong>grep vlan_tagger /var/log/syslog</strong><br>
 Скрипт <strong>stop</strong> останавливает службу<br>
 Для удаления файлов сборки используется <strong>make clean</strong><br></p>
-<strong>change_rules.c</strong> (запускать с sudo) посылает сигнал изменения правил, позже будет интегрирован в CLI
+<strong>change_rules.c</strong>(запускать с sudo) посылает сигнал изменения правил, позже будет интегрирован в CLI
