@@ -1,0 +1,6 @@
+#!/bin/bash
+sudo cp vlantaggerd.service /etc/systemd/system/
+sudo cp filter.txt /var/run/
+sudo cp iface.txt /var/run/
+sudo systemctl daemon-reload
+sudo systemctl start vlantaggerd.service

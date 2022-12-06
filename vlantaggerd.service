@@ -1,0 +1,13 @@
+[Unit]
+  Description=VlanTagger
+
+[Service]
+  Type=simple
+  KillMode=mixed
+  WorkingDirectory=/usr/bin/
+  ExecStart=/usr/bin/vlantaggerd
+  Restart=on-failure
+  OOMScoreAdjust=-100
+
+[Install]
+  WantedBy=multiuser.target
